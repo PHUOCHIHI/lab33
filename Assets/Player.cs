@@ -7,11 +7,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lastPosition;
     private Rigidbody2D rb;
 
+    public AudioClip enemyHitSound; // Âm thanh va chạm với Enemy
+    private AudioSource audioSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // Tìm đối tượng có tag "Spawn"
+        // Tìm đối tượng có tag "Respawn"
         GameObject spawnObject = GameObject.FindGameObjectWithTag("Respawn");
         if (spawnObject != null)
         {
@@ -19,7 +22,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Không tìm thấy đối tượng với tag 'Spawn'!");
+            Debug.LogError("Không tìm thấy đối tượng với tag 'Respawn'!");
+        }
+
+        // Gán hoặc thêm AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
@@ -40,10 +50,16 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(lastPosition);
         }
 
-        // Nếu chạm vào Enemy, reset về vị trí Spawn
+        // Nếu chạm vào Enemy, phát âm thanh rồi hồi sinh
         if (collision.gameObject.CompareTag("Enemy") && spawnPoint != null)
         {
-            transform.position = spawnPoint.position;
+            if (enemyHitSound != null)
+            {
+                audioSource.PlayOneShot(enemyHitSound);
+            }
+
+            // Đợi một chút để âm thanh phát xong trước khi dịch chuyển
+            Invoke(nameof(Respawn), 0.2f);
         }
 
         // Nếu chạm vào Winner, in ra log "Winner"
@@ -51,5 +67,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Winner");
         }
+    }
+
+    private void Respawn()
+    {
+        transform.position = spawnPoint.position;
     }
 }

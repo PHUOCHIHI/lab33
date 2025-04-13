@@ -1,0 +1,8 @@
+.TEXT {
+    opacity: 1;
+    display: flex;
+    position: relative;
+    top: auto;
+    flex-direction: column;
+    width: 1000%;
+}
