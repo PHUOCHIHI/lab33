@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip enemyHitSound; // Âm thanh va chạm với Enemy
     private AudioSource audioSource;
+    private GameManagerrr gameManager;
+
 
     void Start()
     {
@@ -31,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        gameManager = FindObjectOfType<GameManagerrr>();
+        if (gameManager == null)
+        {
+            Debug.LogError("Không tìm thấy GameManager trong scene!");
+        }
+    
     }
 
     void Update()
@@ -50,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(lastPosition);
         }
 
-        // Nếu chạm vào Enemy, phát âm thanh rồi hồi sinh
         if (collision.gameObject.CompareTag("Enemy") && spawnPoint != null)
         {
             if (enemyHitSound != null)
@@ -58,16 +65,20 @@ public class PlayerMovement : MonoBehaviour
                 audioSource.PlayOneShot(enemyHitSound);
             }
 
-            // Đợi một chút để âm thanh phát xong trước khi dịch chuyển
             Invoke(nameof(Respawn), 0.2f);
         }
 
-        // Nếu chạm vào Winner, in ra log "Winner"
+        // Đây là chỗ bạn nên chèn thêm:
         if (collision.gameObject.CompareTag("Winner"))
         {
             Debug.Log("Winner");
+            if (gameManager != null)
+            {
+                gameManager.ShowWinnerScreen();
+            }
         }
     }
+
 
     private void Respawn()
     {

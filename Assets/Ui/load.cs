@@ -6,16 +6,34 @@ public class MenuContdroller : MonoBehaviour
 {
     void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        var uiDocument = GetComponent<UIDocument>();
+        if (uiDocument == null)
+        {
+            Debug.LogError("Không tìm thấy UIDocument trên GameObject!");
+            return;
+        }
 
-        // Lấy nút PLAY GAME theo tên
+        var root = uiDocument.rootVisualElement;
         var playBtn = root.Q<Button>("PLAY");
 
-        // Gán sự kiện bấm nút
+        if (playBtn == null)
+        {
+            Debug.LogError("Không tìm thấy nút có tên 'PLAY' trong UI Builder!");
+            return;
+        }
+
         playBtn.clicked += () =>
         {
             Debug.Log("Đã bấm PLAY GAME");
-            SceneManager.LoadScene("dsxa"); // ✅ Tên chính xác scene bạn muốn load
+
+            if (Application.CanStreamedLevelBeLoaded("dsxa"))
+            {
+                SceneManager.LoadScene("dsxa");
+            }
+            else
+            {
+                Debug.LogError("Scene 'dsxa' chưa được thêm vào Build Settings hoặc tên bị sai!");
+            }
         };
     }
 }

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Winner" style="flex-grow: 1; align-items: flex-start; justify-content: center; align-self: center; width: 50%;">
+        <ui:Label tabindex="-1" text="You Winn" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Winner" style="-unity-font-style: bold; font-size: 40px; align-items: center; justify-content: flex-end; align-self: center; flex-direction: column-reverse; flex-wrap: nowrap;" />
+        <ui:Button text="Next" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 20px; -unity-font-style: bold; align-self: center; width: 20%; background-color: rgb(65, 0, 255); border-left-color: rgb(13, 11, 11); border-right-color: rgb(13, 11, 11); border-top-color: rgb(13, 11, 11); border-bottom-color: rgb(13, 11, 11); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>
